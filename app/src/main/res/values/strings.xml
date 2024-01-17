@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MoveInSync</string>
+    <string name="errorDefaultText">Loading…</string>
+    <string name="errorText">Connect to Internet and try again</string>
+    <string name="login">LOGIN</string>
+    <string name="email_username">Email/Username</string>
+    <string name="password">Password</string>
+    <string-array name="login_options"/>
+        <item name="Type" type="string">Login Type</item>
+        <item name="Traveller" type="string">Traveller</item>
+        <item name="Admin" type="string">Admin</item>
+    <string name="typeerror">Select a login type</string>
+</resources>
