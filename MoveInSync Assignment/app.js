@@ -1,4 +1,4 @@
-const express = require("express");
+aaaaaaconst express = require("express");
 const cors = require('cors');
 const app = express();
 const morgan = require('morgan');
@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./api/routes/user');
 const authRoutes = require('./api/routes/auth');
 
-mongoose.connect('mongodb+srv://ckreddy573:kuchbhi@cluster0.uqtjvwn.mongodb.net', {
+mongoose.connect('MONGO_DB_URI', {
   useNewUrlParser: true,
 });
 mongoose.Promise = global.Promise;
