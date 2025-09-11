@@ -1,9 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const rateLimit = require('express-rate-limit');
 
+// Rate limiter: max 100 requests per 15 minutes per IP
+const verifyLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: {
+        message: "Too many requests, please try again later."
+    }
+});
 
-router.get("/verify", function (req, res, next) {
+router.get("/verify", verifyLimiter, function (req, res, next) {
     const token = req.cookies.token;
     if (!token) {
       return res.status(401).json({
