@@ -15,7 +15,15 @@ const loginLimiter = rateLimit({
     message: "Too many login attempts from this IP, please try again later."
   }
 });
-router.post("/signup", (req, res, next) => {
+// Rate limiter for signup route (e.g. max 3 requests per hour per IP)
+const signupLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 3, // Limit each IP to 3 signups per hour
+  message: {
+    message: "Too many signup attempts from this IP, please try again later."
+  }
+});
+router.post("/signup", signupLimiter, (req, res, next) => {
   User.find({ username : req.body.username })
     .exec()
     .then((user) => {
