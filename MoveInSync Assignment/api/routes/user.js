@@ -3,9 +3,18 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const rateLimit = require("express-rate-limit");
 
 const User = require("../models/user");
 
+// Rate limiter for login route (e.g. max 5 requests per 10 minutes per IP)
+const loginLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 5, // Limit each IP to 5 requests per windowMs
+  message: {
+    message: "Too many login attempts from this IP, please try again later."
+  }
+});
 router.post("/signup", (req, res, next) => {
   User.find({ username : req.body.username })
     .exec()
@@ -59,7 +68,7 @@ router.post("/signup", (req, res, next) => {
 });
 
 
-router.post("/login", (req, res, next) => {
+router.post("/login", loginLimiter, (req, res, next) => {
   User.find({ username : req.body.username }) 
     .exec()
     .then((user) => {
