@@ -77,7 +77,7 @@ router.post("/signup", signupLimiter, (req, res, next) => {
 
 
 router.post("/login", loginLimiter, (req, res, next) => {
-  User.find({ username : req.body.username }) 
+  User.find({ username : { $eq: req.body.username } }) 
     .exec()
     .then((user) => {
       if (user.length < 1) {
