@@ -24,6 +24,11 @@ const signupLimiter = rateLimit({
   }
 });
 router.post("/signup", signupLimiter, (req, res, next) => {
+  if (typeof req.body.username !== "string") {
+    return res.status(400).json({
+      message: "Invalid username parameter."
+    });
+  }
   User.find({ username : req.body.username })
     .exec()
     .then((user) => {
